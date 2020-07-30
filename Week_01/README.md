@@ -1,7 +1,72 @@
 # 学习笔记
 ***
 ## 总结
-&ensp;&ensp;&ensp;&ensp;第一周学习了四种线性数据结构：数组、链表、栈、队列，下面进行简单的总结和一些相关联系扩展
+&ensp;&ensp;&ensp;&ensp;第一周学习了四种线性数据结构：数组、链表、栈、队列，对应进行相关题目的练习，下面进行简单的总结和一些相关联系扩展和布置的任务：
+
+### 用 add first 或 add last 这套新的 API 改写 Deque 的代码
+&ensp;&ensp;&ensp;&ensp;原来的代码如下：
+
+```java
+Deque<String> deque = new LinkedList<String>();
+
+deque.push("a");
+deque.push("b");
+deque.push("c");
+System.out.println(deque);
+
+String str = deque.peek();
+System.out.println(str);
+System.out.println(deque);
+
+while(deque.size() > 0) {
+	System.out.println(deque.pop());
+}
+System.out.println(deque);
+```
+
+&ensp;&ensp;&ensp;&ensp;改写的代码如下：
+
+```java
+Deque<String> deque = new LinkedList<String>();
+
+deque.addFirst("a");
+deque.addFirst("b");
+deque.addFirst("c");
+System.out.println(deque);
+
+String str = deque.	peekFirst();
+System.out.println(str);
+System.out.println(deque);
+
+while(deque.size() > 0) {
+	System.out.println(deque.removeFirst());
+}
+System.out.println(deque);
+```
+
+### 分析 Queue 和 Priority Queue 的源码
+*分析基于jdk10*
+
+#### Queue
+&ensp;&ensp;&ensp;&ensp;Queue是一个接口，没有具体的实现，定义队列含有的方法，大致的方法如下：
+
+- add：添加元素到队列中，队列满了会抛异常
+- element:获取队列头部元素
+- offer：插入元素到队列中
+- peek：获取头部元素
+- poll：获取并移除头部元素
+- remove：移除头部元素
+
+#### Priority Queue
+&ensp;&ensp;&ensp;&ensp;源码链接：http://www.docjar.com/html/api/java/util/PriorityQueue.java.html
+
+&ensp;&ensp;&ensp;&ensp;继承于Queue，由于插入元素有优先级，所有有一个比较器的东西。其中的插入和弹出都做了自己的特有的处理，关键入口函数是siftUp和siftDown，这两个函数里面进行一些优先级的比较，大致好像是基于比较进行一些处理
+
+- add：添加元素到队列中，队列满了会抛异常，其中调用offer函数进行插入
+- offer：插入元素到队列中，空就抛异常，原本没有元素就直接插入，有就调用siftUp函数进行插入
+- peek：直接返回头部元素
+- poll：获取并移除头部元素，siftDown返回数据
+- remove：其中调用了siftDown函数进行一些处理，移除头部元素
 
 ### 数组
 &ensp;&ensp;&ensp;&ensp;数组是连续的内存空间，大小固定，其增删改查的时间复杂度如下，改和查是指下标访问：
