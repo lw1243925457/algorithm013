@@ -39,14 +39,12 @@ System.out.println(str);
 System.out.println(deque);
 
 while(deque.size() > 0) {
-	System.out.println(deque.removeFirst());
+	System.out.println(deque.pop());
 }
 System.out.println(deque);
 ```
 
 ### 分析 Queue 和 Priority Queue 的源码
-*分析基于jdk10*
-
 #### Queue
 &ensp;&ensp;&ensp;&ensp;Queue是一个接口，没有具体的实现，定义队列含有的方法，大致的方法如下：
 
