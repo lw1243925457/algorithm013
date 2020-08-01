@@ -85,6 +85,80 @@ System.out.println(deque);
 - 归并排序：O(NlogN)
 - 快速排序：O(NlogN)
 
+#### 冒泡排序
+&ensp;&ensp;&ensp;&ensp;比较相邻的两元素，不满足大小关系则互换，一次遍历能将一个元素放到正确的位置上。完成排序需要N次遍历，则事件复杂度O(N^2)，可以不使用额外的数据结构，则空间复杂度为O(1)，可以相等时不交换，则是稳定的排序算法。
+
+&ensp;&ensp;&ensp;&ensp;Python3代码大致如下：
+
+```python3
+from typing import List
+
+def bubbleSort(nums: List[int])-> None:
+    n = len(nums)
+    if n < 2:
+        return
+    
+    for i in range(0, n):
+        for j in range(0, n-i-1):
+            if nums[j] < nums[j+1]:
+                nums[j],nums[j+1] = nums[j+1], nums[j]
+    
+nums = [2, 3, 5, 7, 1, 9, 3]
+bubbleSort(nums)
+print(nums)
+```
+
+#### 插入排序
+&ensp;&ensp;&ensp;&ensp;开始将第一个元素划分为有序区间，后面为无序区间，逐步将无序区间的元素插入到有些区间中。两层循环，一个区间划分遍历一次数据，第二层插入数据，大致为O(N^2)，空间复杂度为O(1)，数据相等时不交换，稳定的排线算法。代码大致如下：
+
+```python3
+from typing import List
+
+def insertionSort(nums: List[int])-> None:
+    n = len(nums)
+    if n < 2:
+        return
+    
+    for i in range(1, n):
+        value = nums[i]
+        # 寻找插入的位置
+        j = i - 1
+        while j > -1:
+            # 数据往后移
+            if nums[j] < value:
+                nums[j+1] =  nums[j]
+            else:
+                break
+            j = j - 1
+        # 插入数据
+        nums[j+1] = value
+                
+nums = [2, 3, 5, 7, 1, 9, 3]
+insertionSort(nums)
+print(nums)
+```
+
+#### 选择排序
+&ensp;&ensp;&ensp;&ensp;开始划分1个有序区间，后面查找最小或最大元素放入区间内。时间复杂度O(N^2)，空间O(1),不稳定。代码大致如下：
+
+```python3
+from typing import List
+
+def selectSort(nums: List[int])-> None:
+    n = len(nums)
+    if n < 2:
+        return
+    
+    for i in range(0, n-1):
+        for j in range(i+1, n):
+            if nums[i] < nums[j]:
+                nums[i], nums[j] = nums[j], nums[i]
+                
+nums = [2, 3, 5, 7, 1, 9, 3]
+selectSort(nums)
+print(nums)
+```
+
 ### 链表
 &ensp;&ensp;&ensp;&ensp;链表是零散的内存块，大小动态，链表有可分为下面几种：
 
