@@ -90,7 +90,7 @@ System.out.println(deque);
 
 &ensp;&ensp;&ensp;&ensp;Python3代码大致如下：
 
-```python3
+```python
 from typing import List
 
 def bubbleSort(nums: List[int])-> None:
@@ -111,7 +111,7 @@ print(nums)
 #### 插入排序
 &ensp;&ensp;&ensp;&ensp;开始将第一个元素划分为有序区间，后面为无序区间，逐步将无序区间的元素插入到有些区间中。两层循环，一个区间划分遍历一次数据，第二层插入数据，大致为O(N^2)，空间复杂度为O(1)，数据相等时不交换，稳定的排线算法。代码大致如下：
 
-```python3
+```python
 from typing import List
 
 def insertionSort(nums: List[int])-> None:
@@ -141,7 +141,7 @@ print(nums)
 #### 选择排序
 &ensp;&ensp;&ensp;&ensp;开始划分1个有序区间，后面查找最小或最大元素放入区间内。时间复杂度O(N^2)，空间O(1),不稳定。代码大致如下：
 
-```python3
+```python
 from typing import List
 
 def selectSort(nums: List[int])-> None:
@@ -157,6 +157,131 @@ def selectSort(nums: List[int])-> None:
 nums = [2, 3, 5, 7, 1, 9, 3]
 selectSort(nums)
 print(nums)
+```
+
+#### 归并排序
+&ensp;&ensp;&ensp;&ensp;使用分治的思路，把数组分成两半，分别排序，排序后进行合并。大致代码如下：
+
+```python
+from typing import List
+
+def mergeSort(nums: List[int])-> List[int]:
+    n = len(nums)
+    if n == 1:
+        return nums
+    
+    mid = n // 2
+    lsort = mergeSort(nums[:mid])
+    rsort = mergeSort(nums[mid:])
+    return merge(lsort, rsort)
+
+def merge(nums1: List[int], nums2: List[int])-> List[int]:
+    nums = []
+    n = len(nums1)
+    m = len(nums2)
+    index1 = 0
+    index2 = 0
+    while index1 < n or index2 < m:
+        if index1 >= n:
+            nums.append(nums2[index2])
+            index2 = index2 + 1
+        elif index2 >= m:
+            nums.append(nums1[index1])
+            index1 = index1 + 1
+        elif nums1[index1] < nums2[index2]:
+            nums.append(nums1[index1])
+            index1 = index1 + 1
+        else:
+            nums.append(nums2[index2])
+            index2 = index2 + 1
+    return nums
+
+
+nums = [2, 3, 5, 7, 1, 9, 3]
+print(mergeSort(nums))
+```
+
+#### 快速排序
+&ensp;&ensp;&ensp;&ensp;也是使用分治的思路，随机选取其中一个数最为分界点，把小于其的数反左边或右边，大于其的数类似。大致代码如下：
+
+```python
+from typing import List
+
+def quickSort(nums: List[int], start: int, end: int)-> None:
+    if start >= end:
+        return
+    
+    mid = partition(nums, start, end)
+    # 注意后面排序的序号，排序是不包括分界元素的
+    quickSort(nums, start, mid-1)
+    quickSort(nums, mid+1, end)
+    
+    
+def partition(nums: List[int], start: int, end: int)-> int:
+    """
+    选取最后一个元素为分界，小于的放左，使用了双指针交换元素
+    """
+    value = nums[end]
+    index = start
+    for i in range(start, end):
+        if nums[i] < value:
+            nums[i], nums[index] = nums[index], nums[i]
+            index = index + 1
+    nums[index], nums[end] = nums[end], nums[index]
+    return index
+
+
+nums = [2, 3, 5, 7, 1, 9, 3]
+quickSort(nums, 0, len(nums)-1)
+print(nums)
+```
+
+#### 二分查找
+&ensp;&ensp;&ensp;&ensp;非递归实现
+
+```python
+from typing import List
+
+def binarySearch(nums: List[int], target: int)-> int:
+    n= len(nums)
+    left = 0
+    right = n - 1
+    mid = (left + right) // 2
+    while left <= right:
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+        mid = (left + right) // 2
+    return -1
+
+nums = [1, 2, 3, 4, 6, 7, 8, 9]
+print(binarySearch(nums, 4))
+print(binarySearch(nums, 5))
+```
+
+&ensp;&ensp;&ensp;&ensp;递归实现
+
+```python
+from typing import List
+
+def binarySearch(nums: List[int], target: int, start: int, end: int)-> int:
+    mid = (start + end) // 2
+    if nums[mid] == target:
+        return mid
+    
+    if start <= target:
+        return -1
+    if nums[mid] < target:
+        return binarySearch(nums, target, mid+1, end)
+    else:
+        return binarySearch(nums, target, start, mid-1)
+    
+nums = [1, 2, 3, 4, 6, 7, 8, 9]
+print(binarySearch(nums, 4, 0, len(nums)-1))
+print(binarySearch(nums, 5, 0, len(nums)-1))
 ```
 
 ### 链表
