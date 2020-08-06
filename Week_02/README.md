@@ -3,8 +3,186 @@
 ## 总结
 
 ### Hashmap小总结
+&ensp;&ensp;&ensp;&ensp;hashmap是基于数组进行实现的，利用数组下标访问数据的特性达到快速访问。其有三个关键概念：键，值，散列函数。其中散列函数是键与值之间的桥梁，数组中存储的是值，散列函数就是把外部输入的键转换成小标，进而访问到对应的值。
+
+&ensp;&ensp;&ensp;&ensp;键经散列函数转换的下标，可能存在相同，这个叫散列冲突，解决冲突有两种方法：
+
+- 开放寻址法：出现冲突，重新探测一个空闲位置，再插入
+- 链表法:数组中存储的不是值了，而是一个链表，数据就相应的放入到对应的链表中
+
+#### Java hashmap
+&ensp;&ensp;&ensp;&ensp;参考的接口说明和源码如下：
+
+- [Class HashMap<K,V>](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html)
+- [OpenJDK / jdk8 / jdk8 / jdk](http://hg.openjdk.java.net/jdk8/jdk8/jdk/file/687fd7c7986d/src/share/classes/java/util/HashMap.java)
+
+&ensp;&ensp;&ensp;&ensp;其中的散列函数是这样的：
+
+```java
+public final int hashCode() {
+    return Objects.hashCode(key) ^ Objects.hashCode(value);
+}
+```
+
+&ensp;&ensp;&ensp;&ensp;找到一个String的散列函数是,看着好像进行一些简单的运算：
+
+```java
+public int hashCode() { 
+    int var1 = this.hash; 
+    if(var1 == 0 && this.value.length > 0) { 
+        char[] var2 = this.value; 
+        for(int var3 = 0; var3 < this.value.length; ++var3) { 
+            var1 = 31 * var1 + var2[var3]; 
+        } 
+        this.hash = var1; 
+    } 
+    return var1;
+}
+```
+
+&ensp;&ensp;&ensp;&ensp;看下初始化函数，load factor先不管，也不太看的懂。这个初始化函数设置了一个初始的容量大小，还有一个装载因子之类的。
+
+```java
+ /**
+     * Constructs an empty <tt>HashMap</tt> with the specified initial
+     * capacity and load factor.
+     *
+     * @param  initialCapacity the initial capacity
+     * @param  loadFactor      the load factor
+     * @throws IllegalArgumentException if the initial capacity is negative
+     *         or the load factor is nonpositive
+     */
+    public HashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity < 0)
+            throw new IllegalArgumentException("Illegal initial capacity: " +
+                                               initialCapacity);
+        if (initialCapacity > MAXIMUM_CAPACITY)
+            initialCapacity = MAXIMUM_CAPACITY;
+        if (loadFactor <= 0 || Float.isNaN(loadFactor))
+            throw new IllegalArgumentException("Illegal load factor: " +
+                                               loadFactor);
+        this.loadFactor = loadFactor;
+        this.threshold = tableSizeFor(initialCapacity);
+    }
+```
+
+&ensp;&ensp;&ensp;&ensp;看下常用的put，在插入的过程中看到代码里面有树的操作，感觉Java解决冲突使用的链表法：
+
+```java
+public V put(K key, V value) {
+        return putVal(hash(key), key, value, false, true);
+    }
+
+    /**
+     * Implements Map.put and related methods
+     *
+     * @param hash hash for key
+     * @param key the key
+     * @param value the value to put
+     * @param onlyIfAbsent if true, don't change existing value
+     * @param evict if false, the table is in creation mode.
+     * @return previous value, or null if none
+     */
+    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+                   boolean evict) {
+        Node<K,V>[] tab; Node<K,V> p; int n, i;
+        if ((tab = table) == null || (n = tab.length) == 0)
+            n = (tab = resize()).length;
+        if ((p = tab[i = (n - 1) & hash]) == null)
+            tab[i] = newNode(hash, key, value, null);
+        else {
+            Node<K,V> e; K k;
+            if (p.hash == hash &&
+                ((k = p.key) == key || (key != null && key.equals(k))))
+                e = p;
+            else if (p instanceof TreeNode)
+                e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+            else {
+                for (int binCount = 0; ; ++binCount) {
+                    if ((e = p.next) == null) {
+                        p.next = newNode(hash, key, value, null);
+                        if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                            treeifyBin(tab, hash);
+                        break;
+                    }
+                    if (e.hash == hash &&
+                        ((k = e.key) == key || (key != null && key.equals(k))))
+                        break;
+                    p = e;
+                }
+            }
+            if (e != null) { // existing mapping for key
+                V oldValue = e.value;
+                if (!onlyIfAbsent || oldValue == null)
+                    e.value = value;
+                afterNodeAccess(e);
+                return oldValue;
+            }
+        }
+        ++modCount;
+        if (++size > threshold)
+            resize();
+        afterNodeInsertion(evict);
+        return null;
+    }
+```
+
+&ensp;&ensp;&ensp;&ensp;看下常用的get，计算出hash值，取数据：
+
+```java
+/**
+     * Returns the value to which the specified key is mapped,
+     * or {@code null} if this map contains no mapping for the key.
+     *
+     * <p>More formally, if this map contains a mapping from a key
+     * {@code k} to a value {@code v} such that {@code (key==null ? k==null :
+     * key.equals(k))}, then this method returns {@code v}; otherwise
+     * it returns {@code null}.  (There can be at most one such mapping.)
+     *
+     * <p>A return value of {@code null} does not <i>necessarily</i>
+     * indicate that the map contains no mapping for the key; it's also
+     * possible that the map explicitly maps the key to {@code null}.
+     * The {@link #containsKey containsKey} operation may be used to
+     * distinguish these two cases.
+     *
+     * @see #put(Object, Object)
+     */
+    public V get(Object key) {
+        Node<K,V> e;
+        return (e = getNode(hash(key), key)) == null ? null : e.value;
+    }
+
+    /**
+     * Implements Map.get and related methods
+     *
+     * @param hash hash for key
+     * @param key the key
+     * @return the node, or null if none
+     */
+    final Node<K,V> getNode(int hash, Object key) {
+        Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+            (first = tab[(n - 1) & hash]) != null) {
+            if (first.hash == hash && // always check first node
+                ((k = first.key) == key || (key != null && key.equals(k))))
+                return first;
+            if ((e = first.next) != null) {
+                if (first instanceof TreeNode)
+                    return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+                do {
+                    if (e.hash == hash &&
+                        ((k = e.key) == key || (key != null && key.equals(k))))
+                        return e;
+                } while ((e = e.next) != null);
+            }
+        }
+        return null;
+    }
+```
 
 ### HeapSort自学记录
+*这里就简述下堆的主要概念和使用Python3的大小顶堆的实现*
+
 #### 堆的定义
 - 堆是一个完全二叉树：除了最后一层外，其他层几点必须是满的，且最后一层节点从左向右逐步填充
 - 堆中每一个父节点的值必须大于等于（或小于等于）其两子树节点的值：大于等于是大顶堆，小于等于是小顶堆
@@ -308,4 +486,5 @@ if __name__ == "__main__":
 
 
 ## 参考资料
+- [HeapSort ：自学 https://www.geeksforgeeks.org/heap-sort/]( https://www.geeksforgeeks.org/heap-sort/)
 - [28 | 堆和堆排序：为什么说堆排序没有快速排序快？](https://time.geekbang.org/column/article/69913)
