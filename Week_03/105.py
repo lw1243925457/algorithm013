@@ -30,6 +30,10 @@
 2.1方法改进：
     1方法中中序父亲节点位置的查找优化，使用字典存储好
     2.1方法中的空间优化，使用位置参数代替数组参数
+
+数据都只访问了一次，时间复杂度是O(N)
+第一种方法中每次新建一个数组空间，N(N+1)/2的大小，加上递归栈，空间复杂度大致为O(N)
+第二种方法没有新建数组之类的，空间复杂度为O(1)
 """
 from typing import List
 
@@ -42,6 +46,43 @@ class TreeNode:
         self.right = None
 
 
+# 第二种方法
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if len(preorder) == 0:
+            return None
+
+        index = {element: i for i, element in enumerate(inorder)}
+
+        def create(preLeft, preRight, inLeft, inRight) -> TreeNode:
+            """
+            preLeft为当前树的父节点
+            在中序中查找preLeft的值，确定左右子树的左右边界
+            :param preLeft:
+            :param preRight:
+            :param inLeft:
+            :param inRight:
+            :return:
+            """
+            if preLeft > preRight:
+                return None
+
+            # 构造根节点
+            root = TreeNode(preorder[preLeft])
+            # 获取中序中根节点的位置，求出左子树节点数目
+            rootIndex = index[preorder[preLeft]]
+            leftAmount = rootIndex-inLeft
+            # 构造左右子树
+            root.left = create(preLeft+1, preLeft+leftAmount, inLeft, rootIndex-1)
+            root.right = create(preLeft+1+leftAmount, preRight, rootIndex+1, inRight)
+            return root
+
+        n = len(preorder)
+        return create(0, n-1, 0, n-1)
+
+
+"""
+# 第一种方法
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         if len(preorder) == 0:
@@ -60,6 +101,7 @@ class Solution:
             return root
 
         return build(preorder, inorder)
+"""
 
 
 def dfs(node: TreeNode):

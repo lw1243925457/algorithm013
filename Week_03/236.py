@@ -37,6 +37,8 @@ p、q 为不同节点且均存在于给定的二叉树中。
 
 3.https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/c-jing-dian-di-gui-si-lu-fei-chang-hao-li-jie-shi-/
 上面这个人的思路可以，结合代码和说明看，可以说很清晰了，使用递归分治的思路，其中左右子树找到时其父节点的判断是关键点
+
+最终采用的方法三种，每个数据都只访问了一次，时间复杂度为O(N)，空间复杂度为树的高度了
 """
 
 
