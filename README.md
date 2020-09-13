@@ -25,7 +25,8 @@
 
 
 ## 作业题目列表
-### 第一周:
+### 第一周题目列表
+
 - 1两数之和
 - 21合并两个有序链表
 - 26删除排序数组中的重复项
@@ -35,7 +36,8 @@
 - 189旋转数组
 - 283移动零
 
-### 第二周：
+### 第二周题目列表：
+
 - 1. 两数之和
 - 49. 字母异位词分组
 - 94. 二叉树的中序遍历
@@ -46,12 +48,15 @@
 - 589. N叉树的前序遍历
 - 剑指 Offer 49. 丑数
 
-### 第三周：
+### 第三周题目列表：
+
 - 46. 全排列
 - 47. 全排列 II
 - 77. 组合
 - 105. 从前序与中序遍历序列构造二叉树
 - 236. 二叉树的最近公共祖先
+
+### 第四周题目列表
 
 - 860. 柠檬水找零
 - 122. 买卖股票的最佳时机 II
@@ -66,3 +71,48 @@
 - 153. 寻找旋转排序数组中的最小值
 - 74. 搜索二维矩阵
 - 126. 单词接龙 II
+
+### 第六周题目列表
+
+- [最小路径和](https://leetcode-cn.com/problems/minimum-path-sum/)
+- [解码方法](https://leetcode-cn.com/problems/decode-ways)
+- [最大正方形](https://leetcode-cn.com/problems/maximal-square/)
+- [任务调度器](https://leetcode-cn.com/problems/task-scheduler/)
+- [回文子串](https://leetcode-cn.com/problems/palindromic-substrings/)
+- [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/)
+- [编辑距离](https://leetcode-cn.com/problems/edit-distance/)
+- [矩形区域不超过 K 的最大数值和](https://leetcode-cn.com/problems/max-sum-of-rectangle-no-larger-than-k/)
+- [青蛙过河](https://leetcode-cn.com/problems/frog-jump/)
+- [分割数组的最大值](https://leetcode-cn.com/problems/split-array-largest-sum)
+- [学生出勤记录 II](https://leetcode-cn.com/problems/student-attendance-record-ii/)
+- [最小覆盖子串](https://leetcode-cn.com/problems/minimum-window-substring/)
+- [戳气球](https://leetcode-cn.com/problems/burst-balloons/)
+
+### 第七周题目
+
+- [爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/)
+- [实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/#/description)
+- [朋友圈](https://leetcode-cn.com/problems/friend-circles)
+- [岛屿数量](https://leetcode-cn.com/problems/number-of-islands/)
+- [被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/)
+- [有效的数独](https://leetcode-cn.com/problems/valid-sudoku/description/)
+- [括号生成](https://leetcode-cn.com/problems/generate-parentheses/)
+- [单词接龙](https://leetcode-cn.com/problems/word-ladder/)
+- [最小基因变化](https://leetcode-cn.com/problems/minimum-genetic-mutation/)
+- [单词搜索 II](https://leetcode-cn.com/problems/word-search-ii/)
+- [N 皇后](https://leetcode-cn.com/problems/n-queens/)
+- [解数独](https://leetcode-cn.com/problems/sudoku-solver/#/description)
+
+### 第八周题目
+
+- [位 1 的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
+- [2 的幂](https://leetcode-cn.com/problems/power-of-two/)
+- [颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+- [数组的相对排序](https://leetcode-cn.com/problems/relative-sort-array/)
+- [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
+- [LRU 缓存机制](https://leetcode-cn.com/problems/lru-cache/#/)
+- [力扣排行榜](https://leetcode-cn.com/problems/design-a-leaderboard/)
+- [合并区间](https://leetcode-cn.com/problems/merge-intervals/)
+- [N 皇后](https://leetcode-cn.com/problems/n-queens/description/)
+- [N 皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
+- [翻转对](https://leetcode-cn.com/problems/reverse-pairs/)
