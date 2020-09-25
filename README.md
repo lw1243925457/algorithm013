@@ -116,3 +116,23 @@
 - [N 皇后](https://leetcode-cn.com/problems/n-queens/description/)
 - [N 皇后 II](https://leetcode-cn.com/problems/n-queens-ii/description/)
 - [翻转对](https://leetcode-cn.com/problems/reverse-pairs/)
+
+### 第九周题目
+
+- [字符串中的第一个唯一字符](https://leetcode-cn.com/problems/first-unique-character-in-a-string/)
+- [反转字符串 II ](https://leetcode-cn.com/problems/reverse-string-ii/)
+- [翻转字符串里的单词](https://leetcode-cn.com/problems/reverse-words-in-a-string/)
+- [反转字符串中的单词 III ](https://leetcode-cn.com/problems/reverse-words-in-a-string-iii/)
+- [仅仅反转字母](https://leetcode-cn.com/problems/reverse-only-letters/)
+- [同构字符串](https://leetcode-cn.com/problems/isomorphic-strings/)
+- [验证回文字符串 Ⅱ](https://leetcode-cn.com/problems/valid-palindrome-ii/)
+- [不同路径 2](https://leetcode-cn.com/problems/unique-paths-ii/)
+- [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
+- [解码方法](https://leetcode-cn.com/problems/decode-ways/)
+- [字符串转换整数](https://leetcode-cn.com/problems/string-to-integer-atoi/)
+- [找到字符串中所有字母异位词](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/)
+- [最长回文子串](https://leetcode-cn.com/problems/longest-palindromic-substring/)
+- [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/)
+- [赛车](https://leetcode-cn.com/problems/race-car/)
+- [通配符匹配](https://leetcode-cn.com/problems/wildcard-matching/)
+- [不同的子序列](https://leetcode-cn.com/problems/distinct-subsequences/)
